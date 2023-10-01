@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import Card from "./components/Card";
 
 function App() {
-
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const [inputData, setInputData] = useState({
     name: "",
     age: "",
@@ -19,18 +19,21 @@ function App() {
         [name]: value,
       };
     });
-    console.log(inputData);
   };
 
   const submitChangeHandler = (e) => {
-    e.preventDefault();
-    console.log(inputData);
+    setData((prevData) => {
+      return [...prevData, inputData];
+    });
+
     setInputData({
       name: "",
       age: "",
       height: "",
-      superpower: ""
-    })
+      superpower: "",
+    });
+
+    e.preventDefault();
   };
 
   return (
@@ -76,6 +79,15 @@ function App() {
         </button>
       </form>
       <h3>List of all Superheroes</h3>
+      {data.map((eachData, index) => {
+        return <Card 
+          key={index}
+          name={eachData.name}
+          height={eachData.height}
+          age = {eachData.age}
+          superpower={eachData.superpower}
+        />;
+      })}
     </>
   );
 }
