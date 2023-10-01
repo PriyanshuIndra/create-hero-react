@@ -1,35 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [data, setData] = useState([])
+  const [inputData, setInputData] = useState({
+    name: "",
+    age: "",
+    height: "",
+    superpower: "",
+  });
+
+  const inputChangeHandler = (e) => {
+    let { name, value } = e.target;
+    setInputData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
+    console.log(inputData);
+  };
+
+  const submitChangeHandler = (e) => {
+    e.preventDefault();
+    console.log(inputData);
+    setInputData({
+      name: "",
+      age: "",
+      height: "",
+      superpower: ""
+    })
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <h1>Build a Hero</h1>
+
+      <form onSubmit={submitChangeHandler}>
+        <label htmlFor="Name">Name:</label>
+        <input
+          onChange={inputChangeHandler}
+          name="name"
+          value={inputData.name}
+          id="Name"
+          type="text"
+        />
+        <label htmlFor="Age">Age:</label>
+        <input
+          onChange={inputChangeHandler}
+          name="age"
+          value={inputData.age}
+          id="Age"
+          type="number"
+          step="1"
+        />
+        <label htmlFor="Height">Height:</label>
+        <input
+          onChange={inputChangeHandler}
+          name="height"
+          value={inputData.height}
+          id="Height"
+          type="number"
+        />
+        <label htmlFor="Superpower">Superpower:</label>
+        <input
+          onChange={inputChangeHandler}
+          name="superpower"
+          value={inputData.superpower}
+          type="text"
+          id="Superpower"
+        />
+        <button onClick={submitChangeHandler} type="submit">
+          Submit
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </form>
+      <h3>List of all Superheroes</h3>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
